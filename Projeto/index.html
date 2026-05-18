@@ -1,11 +1,103 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Vigilância de Tuberculose - Manaus</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-    
+    <div class="header">
+        <h1>
+            <span>🫁</span> Vigilância Epidemiológica - Tuberculose em Manaus
+        </h1>
+        <div class="stats-mini">
+            <div class="stat-item">
+                <div class="stat-value" id="totalCasos">0</div>
+                <div class="stat-label">Casos Registrados</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="taxaIncidencia">0</div>
+                <div class="stat-label">Incidência/100k</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="zonasRisco">0</div>
+                <div class="stat-label">Zonas de Alto Risco</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="map-wrapper">
+            <div id="map"></div>
+            <div class="legend">
+                <strong>Risco de Proliferação</strong>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #27ae60;"></div> Baixo
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f39c12;"></div> Médio
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e74c3c;"></div> Alto
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="card">
+                <h3>📈 Série Histórica de Casos (2015-2024)</h3>
+                <canvas id="historicoChart"></canvas>
+            </div>
+
+            <div class="card">
+                <h3>🦠 Simulador de Proliferação</h3>
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Densidade Populacional</label>
+                        <input type="range" id="densidade" min="1000" max="15000" value="5000" step="100">
+                        <span style="font-size:0.8em; color:#666;">Valor: <b id="densidadeVal">5000</b> hab/km²</span>
+                    </div>
+                    <div class="control-group">
+                        <label>Cobertura de Saúde (%)</label>
+                        <input type="range" id="cobertura" min="30" max="100" value="65" step="1">
+                        <span style="font-size:0.8em; color:#666;">Valor: <b id="coberturaVal">65</b>%</span>
+                    </div>
+                    <div class="control-group">
+                        <label>Condições Sanitárias</label>
+                        <input type="range" id="saneamento" min="20" max="100" value="60" step="1">
+                        <span style="font-size:0.8em; color:#666;">Valor: <b id="saneamentoVal">60</b>/100</span>
+                    </div>
+                    <div class="control-group">
+                        <label>Taxa de Migração</label>
+                        <input type="range" id="migracao" min="0" max="5000" value="1000" step="50">
+                        <span style="font-size:0.8em; color:#666;">Valor: <b id="migracaoVal">1000</b>/ano</span>
+                    </div>
+                </div>
+                <button class="btn" onclick="executarSimulacao()">🔬 Executar Simulação</button>
+                <div class="simulation-result" id="resultadoSimulacao" style="display:none;">
+                    <div>Casos Estimados (12 meses):</div>
+                    <div class="result-value" id="casosEstimados">0</div>
+                    <div style="font-size:0.8em; margin-top:5px;">Probabilidade de surto: <span id="probSurto">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📍 Zonas Críticas</h3>
+                <div id="zonasCriticas" style="font-size:0.9em;">
+                    <div style="color:#666;">Clique nos marcadores do mapa para detalhes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="index.js"></script>
 </body>
+
 </html>
