@@ -38,3 +38,9 @@ O protótipo foca na delimitação geográfica interativa e na exibição detalh
   * Projeção de incidência por $100.000$ habitantes
 
 ## Arquitetura a ser definida!
+
+### 1. Modelagem matemática
+
+Contém os modelso desnevolvidos para a  previsão e análise da tuberculose
+
+Para instruções de instalação de bibliotecas e como testar os parâmetros deste módulo, consulte [Modelos](./modelos_matematicos/README.md)
